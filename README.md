@@ -11,3 +11,18 @@ Relevant Columns:
 * Calories: Total calorie count of the recipe, extracted from the nutrition field which contains calorie, fat, etc 
 * Avg_rating: Mean rating (1–5 stars) across all user reviews
 * Highly_rated: 1 if avg_rating ≥ 4, else 0 (derived)
+
+Hypothesis Testing
+Null Hypothesis: On average, the rating of higher calorie recipes is the same as the rating of lower calorie recipes. 
+
+Alternative Hypothesis: On average, the rating of higher calorie recipes is different from the rating of lower calorie recipes.
+
+Test Statistic: Absolute difference in mean average ratings between higher calorie recipes and lower calorie recipes. 
+This is a good choice for answering our question because our alternative hypothesis is two-sided and does not predict a direction. 
+
+Significance level: 0.05
+
+p-value: 0.075
+
+Conclusion: We fail to reject the null hypothesis at the 0.05 significance level with a p-value of 0.075. This means we don't have enough evidence to show that calories are associated with the average rating of recipes.
+
