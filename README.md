@@ -11,3 +11,13 @@ Relevant Columns:
 * Calories: Total calorie count of the recipe, extracted from the nutrition field which contains calorie, fat, etc 
 * Avg_rating: Mean rating (1–5 stars) across all user reviews
 * Highly_rated: 1 if avg_rating ≥ 4, else 0 (derived)
+
+## Data Cleaning and Exploratory Data Analysis
+#### Data Cleaning Steps
+1. Parsed nutrition column because the raw nutrition field was a string like [138.4, 10.0, 50.0, ...], with each calories, total_fat, sugar, sodium, protein, saturated_fat, and carbohydrates each being represented by a number (respectively). Stripped the brackets, split on commas, and cast to float, assigned the 7 values as separate columns, made using only one of the 7 values much easier.
+2. Merged recipes with interactions: left merge of RAW_recipes onto interactions on recipe ID, preserving all recipes.
+3. Replaced 0-star ratings with NaN: a rating of 0 indicates a missing rating, so replaced because they are not genuine low ratings (would have skewed rating distributions incorrectly).
+4. Computed average rating per recipe: grouped by recipe ID and computed the mean rating, then merged this back onto the recipes dataset as avg_rating.
+5. Dropped rows missing calories or avg_rating: recipes without a calorie value or any ratings were removed (81,173 rows final).
+6. Created highly_rated column: a binary indicator (1 if avg_rating ≥ 4, else 0) helpful for use in later classification tasks.
+
