@@ -33,3 +33,23 @@ Relevant Columns:
 <iframe src="/assets/cals_dist.html" width="800" height="600" frameborder="0"></iframe>
 
 The distribution of calories is heavily right-skewed, with most recipes falling below 500 calories and the tail of high-calorie outliers (long tail). To help modeling,  log-transforming calories is helpful (more later).
+
+#### Bivariate Analysis
+<iframe src="/assets/cal_v_rating.html" width="800" height="600" frameborder="0"></iframe>
+
+The scatter plot of calories vs. average rating doesn't have a clear linear trend. Recipes tend to cluster near 4–5 stars (regardless of calories), which suggests that calories alone may not be a strong predictor of rating.
+
+#### Intresting Aggregates
+
+| calorie_bin | num_recipes | mean_rating | pct_highly_rated |
+|---|---|---|---|
+| <200 | 24,868 | 4.634 | 0.935 |
+| 200-400 | 27,305 | 4.621 | 0.934 |
+| 400-600 | 14,771 | 4.621 | 0.936 |
+| 600-800 | 6,556 | 4.621 | 0.933 |
+| 800-1000 | 3,034 | 4.632 | 0.929 |
+| 1000+ | 4,412 | 4.618 | 0.929 |
+
+This table shows that mean ratings and the proportion of highly-rated recipes are relatively consistent across all calorie recipes (separated brackets). They all lie around 4.62 stars and around 93% highly rated. This might suggest that calorie content has little to no relationship with how users rate recipes.
+
+
