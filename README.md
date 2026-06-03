@@ -30,13 +30,11 @@ Relevant Columns:
 | 4 | 2000 meatloaf | 267.0 | 30.0 | 12.0 | 12.0 | 29.0 | 48.0 | 2.0 | 5.0 | 1 |
 
 #### Univariate Analysis
-<iframe src="/assets/cals_dist.html" width="800" height="600" frameborder="0"></iframe>
-
+<iframe src="assets/cals_dist.html" width="800" height="600" frameborder="0"></iframe>
 The distribution of calories is heavily right-skewed, with most recipes falling below 500 calories and the tail of high-calorie outliers (long tail). To help modeling,  log-transforming calories is helpful (more later).
 
 #### Bivariate Analysis
-<iframe src="/assets/cal_v_rating.html" width="800" height="600" frameborder="0"></iframe>
-
+<iframe src="assets/cal_v_rating.html" width="800" height="600" frameborder="0"></iframe>
 The scatter plot of calories vs. average rating doesn't have a clear linear trend. Recipes tend to cluster near 4–5 stars (regardless of calories), which suggests that calories alone may not be a strong predictor of rating.
 
 #### Intresting Aggregates
