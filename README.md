@@ -112,3 +112,46 @@ The model’s performance:
 |---|---|---|
 | Accuracy | 0.935 | 0.932 |
 | F1-score | 0.966 | 0.965 |
+
+We do not think this is a very good model. The F1-score looks decent, but because our model is not balanced, a model that just predicts "highly rated" for most recipes would also score well. Using only two simple quantitative features like calories and number of steps is not enough for the model to really understand what separates a highly rated recipe from a low rated one. Despite that, it gives us a reasonable baseline to build off.
+
+## Final Model
+
+For our final model we kept the same Decision Tree Classifier but we added a third feature and applied more thoughtful preprocessing. The three features we used are all quantitative: calories, n_steps, and n_ingredients.
+
+We applied a log transformation to calories using a FunctionTransformer. The calorie distribution in our dataset is heavily right-skewed, where most recipes have lower calories but some recipes have extremely high calorie counts. Log transforming this feature compresses those large values and brings the distribution closer to normal, which helps the decision tree find more meaningful split points instead of being thrown off by outliers. We applied StandardScaler to n_steps and n_ingredients to normalize their scales.
+
+We added n_ingredients because recipes with more ingredients tend to be more complex and involved, which could influence how users rate them. This is something the model would not be able to capture using only calories and steps.
+
+We selected hyperparameters using GridSearchCV with 5-fold cross-validation, searching over multiple values of max_depth and min_samples_split. The best hyperparameters found were a max_depth of 3 and min_samples_split of 2. The depth of 3 suggests that the most useful splits in our data are simple and high level, and going deeper would likely cause the model to overfit.
+
+The final model performance:
+
+| Metric | Train | Test |
+|---|---|---|
+| Accuracy | 0.935 | 0.932 |
+| F1-score | 0.966 | 0.965 |
+
+The improvement over the baseline is small, which makes sense given how imbalanced our dataset is. Both models score similarly because the majority of recipes being highly rated makes it easy for either model to achieve a high F1-score. Even then, the final model is built more carefully, with more thoughtful feature engineering and a proper hyperparameter search, which gives us more confidence that it will hold up on new recipes. 
+
+## Fairness Analysis
+
+We wanted to check whether our model performs equally well on simple recipes compared to more complex ones. To do this, we split recipes into two groups based on the median number of steps:
+
+* **Group X (simple recipes)**: recipes with n_steps at or below the median
+* **Group Y (complex recipes)**: recipes with n_steps above the median
+
+Our evaluation metric is F1-score, which is the same metric we used to evaluate our model throughout the project.
+
+**Null Hypothesis**: Our model is fair and its F1-score for simple recipes and complex recipes are roughly the same, with any differences due to random chance.
+
+**Alternative Hypothesis**: Our model is unfair and its F1-score for simple recipes is higher than its F1-score for complex recipes.
+
+**Test Statistic**: Difference in F1-score (simple recipes - complex recipes)
+
+**Significance Level**: 0.05
+
+Our model scored 0.9664 on simple recipes and 0.9653 on complex recipes, with an observed difference of 0.0011. After running 1000 permutations, we ended up with a p-value of 0.12.
+
+**Conclusion**: We fail to reject the null hypothesis at the 0.05 significance level. The gap in F1-score between the two groups is small and well within what we would expect from random chance alone. Based on this, our model does not seem to be treating simple and complex recipes differently in any meaningful way.
+
