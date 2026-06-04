@@ -64,6 +64,12 @@ We analyzed whether the missingness of avg_rating depends on other columns using
 ##### avg_rating missingness vs calories (dependent!)
 <iframe src="assets/ks_calories.html" width="800" height="600" frameborder="0"></iframe>
 
-The observed KS statistic was 0.062 with a p-value of 0.000. We reject the null hypothesis that the missingness of avg_rating doesn't depend on calories. Recipes with missing ratings have a somewhat significantly different calorie distribution than those that have ratings.
+The observed KS statistic was 0.062 with a p-value of 0.000. We reject the null hypothesis that the missingness of avg_rating doesn't depend on calories. Recipes with missing ratings have a somewhat significant different calorie distribution than those that have ratings.
+
+##### avg_rating missingness vs sodium (independent)
+<iframe src="assets/ks_sodium.html" width="800" height="600" frameborder="0"></iframe>
+
+The observed KS statistic was 0.024 with a p-value of 0.078. We fail to reject the null hypothesis, so it seems like the sodium content of a recipe does not appear to be related to whether it has a rating or not.
+
 
 
