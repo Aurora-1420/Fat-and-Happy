@@ -71,5 +71,44 @@ The observed KS statistic was 0.062 with a p-value of 0.000. We reject the null 
 
 The observed KS statistic was 0.024 with a p-value of 0.078. We fail to reject the null hypothesis, so it seems like the sodium content of a recipe does not appear to be related to whether it has a rating or not.
 
+## Hypothesis Testing
+Null Hypothesis: On average, the rating of higher calorie recipes is the same as the rating of lower calorie recipes. 
 
 
+Alternative Hypothesis: On average, the rating of higher calorie recipes is different from the rating of lower calorie recipes.
+
+
+Test Statistic: Absolute difference in mean average ratings between higher calorie recipes and lower calorie recipes. 
+
+This is a good choice for answering our question because our alternative hypothesis is two-sided and does not predict a direction. 
+
+
+Significance level: 0.05
+
+
+p-value: 0.075
+
+
+Conclusion: We fail to reject the null hypothesis at the 0.05 significance level with a p-value of 0.075. This means we don't have enough evidence to show that calories are associated with the average rating of recipes.
+
+## Framing a Prediction Problem
+
+&emsp;We performed binary classification to predict if a recipe will be highly rated (4+ stars). Our response variable is highly_rated, which is a binary column that we derived from avg_rating, where 1 means the recipe has an average rating of 4 or above and 0 means it does not. We chose this variable because it directly connects to our central question about if characteristics like calories influence how users rate them.
+
+&emsp;Our evaluation metric is F1-score rather than accuracy. Since most of the recipes in our dataset are highly rated, a model that simply predicts "highly rated" for every recipe would be highly accurate, but it wouldn’t be useful. F1-score accounts for this by balancing precision and recall, which makes it a more meaningful measure of the model’s performance when the data is not balanced. 
+
+&emsp;When we made predictions, we only used features that would be known before a recipe receives any ratings, such as calories, n_steps, n_ingredients, and minutes. These are all properties of the recipe that are set when the recipe is first submitted to food.com. We excluded any features derived from user interactions such as avg_rating, since those would not be available when trying to predict how a brand new recipe will be rated. 
+
+
+## Baseline Model
+
+Our baseline model is a Decision Tree Classifier with a maximum depth of 6. We implemented it in a single sklearn Pipeline that standardizes the features using a StandardScaler before fitting the classifier.
+
+The model uses two features, which are both quantitative: calories (the total calorie count of the recipe) and n_steps (the number of steps in the recipe). There are no ordinal or nominal features in this model, so we didn’t need any other encodings. 
+
+The model’s performance:
+
+| Metric | Train | Test |
+|---|---|---|
+| Accuracy | 0.935 | 0.932 |
+| F1-score | 0.966 | 0.965 |
