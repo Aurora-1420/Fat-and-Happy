@@ -1,4 +1,4 @@
-# Fat-and-Happy
+# Fat and Happy
 
 ## Introduction
 &emsp;This project uses two datasets that contain recipes and ratings food.com (recipes and interactions datasets). The recipes dataset contains 83,782 rows, where each row represents a unique recipe, and the interactions dataset contains 731927 rows, where each row represents an interaction with a review (a rating, some with reviews). After merging the two datasets, we cleaned the merged dataset, which involved replacing 0-star ratings with NaN and computing average ratings per recipe. In the end, our working dataset has 81,173 rows and 23 columns.
@@ -35,7 +35,7 @@ The distribution of calories is heavily right-skewed, with most recipes falling 
 
 #### Bivariate Analysis
 <iframe src="assets/cal_v_rating.html" width="800" height="600" frameborder="0"></iframe>
-The scatter plot of calories vs. average rating doesn't have a clear linear trend. Recipes tend to cluster near 4–5 stars (regardless of calories), which suggests that calories alone may not be a strong predictor of rating.
+The scatter plot of calories vs. average rating doesn't have a clear linear trend. Recipes tend to cluster near 4–5 stars (regardless of calories), which suggests that calories by itself may not be a strong predictor of rating.
 
 #### Intresting Aggregates
 
@@ -48,6 +48,22 @@ The scatter plot of calories vs. average rating doesn't have a clear linear tren
 | 800-1000 | 3,034 | 4.632 | 0.929 |
 | 1000+ | 4,412 | 4.618 | 0.929 |
 
-This table shows that mean ratings and the proportion of highly-rated recipes are relatively consistent across all calorie recipes (separated brackets). They all lie around 4.62 stars and around 93% highly rated. This might suggest that calorie content has little to no relationship with how users rate recipes.
+This table shows that mean ratings and the proportion of highly-rated recipes are relatively consistent across all calorie recipes (bins). They all lie around 4.62 stars and around 93% highly rated. This might suggest that calorie content has little to no relationship with how users rate recipes.
+
+
+## Assessment of Missingness
+
+#### NMAR Analysis
+
+We think avg_rating could be NMAR, since recipe users may be less likely to leave a rating when they had a neutral or less extreme experience. In general, people tend to put in the effort to rate things when they feel strongly (either very satisfied or very dissatisfied). So as a result, the missingness of avg_rating might be related to the rating value itself (NMAR). If we obtained the additional data of notation of whether the user viewed the recipe without cooking it, or time spent on the page, avg_rating could become MAR. 
+
+#### Missingness Dependency
+
+We analyzed whether the missingness of avg_rating depends on other columns using permutation tests with the KS statistic.
+
+##### avg_rating missingness vs calories (dependent!)
+<iframe src="assets/ks_calories.html" width="800" height="600" frameborder="0"></iframe>
+
+The observed KS statistic was 0.062 with a p-value of 0.000. We reject the null hypothesis that the missingness of avg_rating doesn't depend on calories. Recipes with missing ratings have a somewhat significantly different calorie distribution than those that have ratings.
 
 
